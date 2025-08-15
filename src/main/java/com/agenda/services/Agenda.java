@@ -1,6 +1,8 @@
 package com.agenda.services;
 
+import com.agenda.integration.ApiCep;
 import com.agenda.model.Contato;
+import com.agenda.model.Endereco;
 import com.agenda.persistence.GerenciadorArquivo;
 import com.agenda.util.Validador;
 
@@ -9,23 +11,34 @@ import java.util.ArrayList;
 public class Agenda {
   private ArrayList<Contato> contatos;
   private GerenciadorArquivo gerenciador;
+  private ApiCep apiClient;
 
   public Agenda() {
     this.gerenciador = new GerenciadorArquivo();
     this.contatos = gerenciador.carregarAgenda();
+    this.apiClient = new ApiCep();
   }
 
   private boolean existeContato(String cpf) {
     return contatos.stream().anyMatch(c -> c.getCpf().equals(cpf));
   }
 
-  public String criarContato(String cpf, String nome, String telefone) {
+  public String criarContato(String cpf, String nome, String telefone, String cep) {
     if (existeContato(cpf)) {
       return "Contato já existe!";
     }
 
     if (Validador.validarCPF(cpf)) {
-      Contato contato = new Contato(cpf, nome, telefone);
+      Endereco enderecoObjeto = apiClient.buscaEnderecoPeloCEP(cep);
+      String enderecoFinal;
+
+      if (enderecoObjeto != null && enderecoObjeto.getLogradouro() != null) {
+        enderecoFinal = enderecoObjeto.getLogradouro() + ", " + enderecoObjeto.getBairro() + " - CEP " + enderecoObjeto.getCep();
+      } else {
+        enderecoFinal = "";
+      }
+
+      Contato contato = new Contato(cpf, nome, telefone, enderecoFinal);
       contatos.add(contato);
       gerenciador.salvarAgenda(contatos);
       return "Contato criado com sucesso!";

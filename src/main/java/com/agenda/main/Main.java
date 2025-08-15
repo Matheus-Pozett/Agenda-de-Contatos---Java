@@ -14,7 +14,7 @@ public class Main {
   public static void main(String[] args) {
     Agenda agenda = new Agenda();
     int opcao;
-    String cpf, nome, telefone;
+    String cpf, nome, telefone, cep;
     do {
       System.out.println("-------AGENDA DE CONTATOS-------");
       System.out.println("1) Novo contato");
@@ -36,8 +36,12 @@ public class Main {
 
           System.out.print("Digite o telefone: ");
           telefone = sc.next();
+          sc.nextLine();
 
-          System.out.println(agenda.criarContato(cpf, nome, telefone));
+          System.out.print("Digite o CEP (apenas números): ");
+          cep = sc.nextLine();
+
+          System.out.println(agenda.criarContato(cpf, nome, telefone, cep));
           break;
         case 2:
           System.out.print("Digite o cpf do contato que deseja consultar: ");

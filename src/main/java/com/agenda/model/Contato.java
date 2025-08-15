@@ -4,11 +4,17 @@ public class Contato {
   private final String cpf;
   private String nome;
   private String telefone;
+  private String endereco;
 
-  public Contato(String cpf, String nome, String telefone) {
+  public Contato(String cpf, String nome, String telefone, String endereco) {
     this.cpf = cpf;
     this.nome = nome;
     this.telefone = telefone;
+    this.endereco = endereco;
+  }
+
+  public String getEndereco() {
+    return endereco;
   }
 
   public String getCpf() {
@@ -33,14 +39,15 @@ public class Contato {
 
   @Override
   public String toString() {
-    return "Contato{" +
-            "cpf='" + cpf + '\'' +
-            ", nome='" + nome + '\'' +
-            ", telefone='" + telefone + '\'' +
-            '}';
+    return "Contato {" +
+            "cpf: " + cpf +
+            ", nome: " + nome +
+            ", telefone: " + telefone +
+            ", endereço: " + endereco +
+            " }";
   }
 
   public String formatarCsv() {
-    return this.cpf + ";" + this.nome + ";" + this.telefone;
+    return cpf + ";" + nome + ";" + telefone + ";" + endereco;
   }
 }

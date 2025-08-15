@@ -43,12 +43,13 @@ public class GerenciadorArquivo {
       while ((linha = reader.readLine()) != null) {
         String[] partes = linha.split(";");
 
-        if (partes.length == 3) {
+        if (partes.length == 4) {
           String cpf = partes[0];
           String nome = partes[1];
           String telefone = partes[2];
+          String endereco = partes[3];
 
-          Contato contato = new Contato(cpf, nome, telefone);
+          Contato contato = new Contato(cpf, nome, telefone, endereco);
 
           contatos.add(contato);
         }
