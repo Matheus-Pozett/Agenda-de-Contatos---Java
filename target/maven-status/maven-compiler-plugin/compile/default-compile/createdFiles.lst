@@ -1,0 +1,8 @@
+com/agenda/integration/ApiCep.class
+com/agenda/main/Main.class
+com/agenda/services/Agenda.class
+com/agenda/model/Endereco.class
+com/agenda/util/Validador.class
+com/agenda/model/Contato.class
+com/agenda/util/Validador$1CalculoBase.class
+com/agenda/persistence/GerenciadorArquivo.class
