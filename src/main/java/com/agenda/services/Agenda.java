@@ -7,6 +7,7 @@ import com.agenda.persistence.GerenciadorArquivo;
 import com.agenda.util.Validador;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Agenda {
   private ArrayList<Contato> contatos;
@@ -57,7 +58,32 @@ public class Agenda {
             .orElse("Contato não existe");
   }
 
-  public String editarContato(String cpf) {}
+  public String editarContato(String cpf, String novoNome, String novoTelefone, String novoCep) {
+    Optional<Contato> contatoOptional = contatos.stream()
+            .filter(c -> c.getCpf().equals(cpf))
+            .findFirst();
+
+    if (contatoOptional.isPresent()) {
+      Contato contato = contatoOptional.get();
+      contato.setNome(novoNome);
+      contato.setTelefone(novoTelefone);
+
+      Endereco enderecoObjeto = apiClient.buscaEnderecoPeloCEP(novoCep);
+      String enderecoFinal;
+
+      if (enderecoObjeto != null && enderecoObjeto.getLogradouro() != null) {
+        enderecoFinal = enderecoObjeto.getLogradouro() + " " + enderecoObjeto.getBairro() +
+                " " + enderecoObjeto.getLocalidade() + " " + enderecoObjeto.getUf();
+      } else {
+        enderecoFinal = "";
+      }
+      contato.setEndereco(enderecoFinal);
+      gerenciador.salvarAgenda(contatos);
+      return "Contato editado com sucesso!";
+    } else {
+      return "Contato não encontrado.";
+    }
+  }
 
   public void excluirContato(String cpf) {
     boolean removerContato = contatos.removeIf(c -> c.getCpf().equals(cpf));
