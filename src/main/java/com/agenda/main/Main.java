@@ -23,6 +23,7 @@ public class Main {
       System.out.println("4) Excluir contato");
       System.out.println("5) Listar contatos");
       System.out.println("6) Sair");
+      System.out.print("Escolha a opção: ");
       opcao = sc.nextInt();
       sc.nextLine();
 

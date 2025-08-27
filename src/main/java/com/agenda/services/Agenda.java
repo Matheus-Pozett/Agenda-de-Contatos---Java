@@ -33,7 +33,8 @@ public class Agenda {
       String enderecoFinal;
 
       if (enderecoObjeto != null && enderecoObjeto.getLogradouro() != null) {
-        enderecoFinal = enderecoObjeto.getLogradouro() + ", " + enderecoObjeto.getBairro() + " - CEP " + enderecoObjeto.getCep();
+        enderecoFinal = enderecoObjeto.getLogradouro() + " " + enderecoObjeto.getBairro() +
+                " " + enderecoObjeto.getLocalidade() + " " + enderecoObjeto.getUf();
       } else {
         enderecoFinal = "";
       }
@@ -55,6 +56,8 @@ public class Agenda {
             .map(contato -> contato.toString())
             .orElse("Contato não existe");
   }
+
+  public String editarContato(String cpf) {}
 
   public void excluirContato(String cpf) {
     boolean removerContato = contatos.removeIf(c -> c.getCpf().equals(cpf));
